@@ -1,0 +1,13 @@
+name: myFirstWorkflow
+# to work on every workflow on this branch
+on: push
+jobs:
+  job1:
+    name : job1
+    runs-on : ubuntu-latest
+    steps:
+      - name : Running Single Command in job1
+      - run : echo 'HI' this is my first github workflow
+      - name : Checking on Release for Githuub hosted runners
+      - run : cat etc/os-release
+    
