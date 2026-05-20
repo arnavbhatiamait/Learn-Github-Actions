@@ -48,4 +48,4 @@ jobs:
       - name : job for multiple dependencies
         run : sleep 5
       - name : checking runner info
-        run: sw_version
+        run: sw_vers
