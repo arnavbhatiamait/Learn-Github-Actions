@@ -1,9 +1,10 @@
 name: myFirstWorkflow
 # to work on every workflow on this branch
 on: 
-  # push    
   schedule : 
     - cron : "*/5 * * * *"
+  push:
+  workflow_dispatch:
 jobs:
   job1:
     name : job1
