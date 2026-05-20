@@ -1,6 +1,9 @@
 name: myFirstWorkflow
 # to work on every workflow on this branch
-on: push
+on: 
+  # push    
+  schedule : 
+    - cron : "*/5 * * * *"
 jobs:
   job1:
     name : job1
