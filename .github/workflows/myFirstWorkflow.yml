@@ -10,4 +10,17 @@ jobs:
         run : echo 'HI' this is my first github workflow
       - name : Checking OS Release for Github hosted runners
         run : cat /etc/os-release
-    
+      - name: calling sleep
+        run : sleep 20
+  job2:
+    name : job2
+    runs-on: ubuntu-latest
+    steps:
+      - name: checking Hostname for Runner
+        run: hostname
+      - name: running multiple commands
+        run : |
+          echo "Hi from Arnav Bhatia"
+          echo "current time is `date"
+          sleep 20
+      
