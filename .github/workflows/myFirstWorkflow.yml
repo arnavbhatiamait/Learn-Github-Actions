@@ -24,3 +24,19 @@ jobs:
           echo "current time is `date`"
           sleep 20
       
+  job3:
+    name: job3
+    # ! run when job1  is completed
+    needs : job1
+    runs-on: ubuntu-latest 
+    steps:
+      - name : Job with single dependency
+        run : sleep 5
+  job4:
+    name: job4
+    # ! run when all are completed
+    needs: [job1,job2,job3]
+    runs-on: ubuntu-latest
+    steps:
+      - name : job for multiple dependencies
+        run : sleep 5
