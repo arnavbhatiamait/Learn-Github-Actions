@@ -7,7 +7,7 @@ jobs:
     runs-on : ubuntu-latest
     steps:
       - name : Running Single Command in job1
-      - run : echo 'HI' this is my first github workflow
+        run : echo 'HI' this is my first github workflow
       - name : Checking on Release for Githuub hosted runners
-      - run : cat etc/os-release
+        run : cat etc/os-release
     
