@@ -3,7 +3,7 @@ name: my-first-workflow
 on:
   push:
     branches:
-      # - dev
+      - dev
       # - 'feature-*'
       - main
   pull_request:
