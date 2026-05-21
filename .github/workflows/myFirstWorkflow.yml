@@ -54,3 +54,19 @@ jobs:
             ./myFirstWorkflow.txt
             artifacts/
             !**/hostname.txt
+  job2:
+    name: job2
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checking the current directory
+        run : |
+          pwd
+          ls -ltr
+      - name: Downloading the artifact from job1
+        uses: actions/download-artifact@v5.0.0
+        with:
+          name: single-file-download
+      - name: Checking the downloaded artifact
+        run : |
+          ls -ltr single-file
+          cat single-file/myFirstWorkflow.txt      
