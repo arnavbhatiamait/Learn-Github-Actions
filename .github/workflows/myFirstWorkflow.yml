@@ -58,11 +58,42 @@ jobs:
           echo "[INFO] APP USER is $APP_USER"
           echo "[INFO] APP PORT is $APP_PORT"
           echo "[INFO] ENV TYPE is $ENV_TYPE"
-      - name: checking current directory post download
-        run: | 
-          pwd
-          ls -ltr
-          # ! making job 2 to fail
-      - name : Step for PR demos
-        run : exit 0
-  
+      - name : using Github Secrets
+        run : |
+          echo "Github token is ${{ secrets.APP_PASSWORD }}"
+  job3:
+    name: JOB3
+    runs-on: ubuntu-latest
+    steps: 
+      - name : Reffering context or in built variables
+        run : |
+          echo "[INFO] Triggred by ${{github.event_name}}"
+          echo "[INFO] New changes are done by ${{github.actor}} in repo ${{github.repository}} and branch is ${{github.ref}}"
+          echo "[INFO] Current step is running on ${{job.check_run_id}}"
+
+  staging:
+    name: Staging Deployment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Reffering Environment variables
+        run: |
+          echo "[INFO] Running deployment on staging environment on Host ${{vars.HOST}} and User is ${{vars.USER}}"
+      - name : Reffering Enviornment Secrets
+        run : |
+          echo "Password is ${{ secrets.PASSWORD }}" 
+    environment:
+      name: STAGING
+    if: github.ref == 'refs/heads/dev' 
+  production:
+    name: Production Deployment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Reffering Environment variables
+        run: |
+          echo "[INFO] Running deployment on production environment on Host ${{vars.HOST}} and User is ${{vars.USER}}"
+      - name : Reffering Enviornment Secrets
+        run : |
+          echo "Password is ${{ secrets.PASSWORD }}" 
+    environment:
+      name: PRODUCTION
+    if: github.ref == 'refs/heads/main'
