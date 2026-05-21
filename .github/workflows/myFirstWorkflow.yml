@@ -62,10 +62,10 @@ jobs:
         run : |
           pwd
           ls -ltr
-      - name: Downloading the artifact from job1
+      - name: Downloading the artifact 
         uses: actions/download-artifact@v5.0.0
         with:
-          name: single-file-download
+          name: single-file
       - name: Checking the downloaded artifact
         run : |
           pwd  
