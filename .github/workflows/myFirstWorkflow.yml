@@ -53,5 +53,5 @@ jobs:
           ls -ltr
           # ! making job 2 to fail
       - name : Step for PR demos
-        run : exit 1
+        run : exit 0
   
