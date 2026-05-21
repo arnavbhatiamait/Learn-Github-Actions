@@ -51,4 +51,7 @@ jobs:
         run: | 
           pwd
           ls -ltr
+          # ! making job 2 to fail
+      - name : Step for PR demos
+        run : exit 1
   
