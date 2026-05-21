@@ -28,7 +28,7 @@ jobs:
           ls -ltr
           hostname
       - name : upload Single file
-        uses: actions/upload-artifact@v3.1.2
+        uses: actions/upload-artifact@v5.0.0
         with:
           name: single-file
           path : ./myFirstWorkflow.txt
