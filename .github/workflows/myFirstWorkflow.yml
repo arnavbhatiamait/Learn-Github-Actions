@@ -61,3 +61,13 @@ jobs:
       - name : using Github Secrets
         run : |
           echo "Github token is ${{ secrets.APP_PASSWORD }}"
+  job3:
+    name: JOB3
+    runs-on: ubuntu-latest
+    steps: 
+      - name : Reffering context or in built variables
+        run : |
+          echo "[INFO] Triggred by ${{github.event_name}}"
+          echo "[INFO] New changes are done by ${{github.actor}} in repo ${{github.repository}} and branch is ${{github.ref}}"
+          echo "[INFO] Current step is running on ${{job.check_run_id}}"
+
