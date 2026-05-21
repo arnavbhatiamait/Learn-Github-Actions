@@ -37,19 +37,19 @@ jobs:
       - name : upload Multiple files
         uses: actions/upload-artifact@v5.0.0
         with:
-          name: multiple-files
+          name: multiple-files-folder
           path : artifacts/
       - name : upload from multiple paths
         uses: actions/upload-artifact@v5.0.0
         with:
-          name: multiple-files
+          name: multiple-files-files-n-folder
           path : |
             ./myFirstWorkflow.txt
             artifacts/
       - name : upload from multiple paths with exclusions
         uses: actions/upload-artifact@v5.0.0
         with:
-          name: multiple-files
+          name: multiple-files-exclusions
           path : |
             ./myFirstWorkflow.txt
             artifacts/
