@@ -24,6 +24,11 @@ jobs:
 
       - name: Step 3
         run: |
-          pwd
+          echo `pwd` >> myFirstWorkflow.txt 
           ls -ltr
           hostname
+      - name : upload Single file
+        uses: actions/upload-artifact@v3.1.2
+        with:
+          name: single-file
+          path : ./myFirstWorkflow.txt
