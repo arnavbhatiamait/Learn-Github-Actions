@@ -68,5 +68,6 @@ jobs:
           name: single-file-download
       - name: Checking the downloaded artifact
         run : |
-          ls -ltr single-file
-          cat single-file/myFirstWorkflow.txt      
+          pwd  
+          ls -ltr 
+          
