@@ -11,6 +11,10 @@ on:
       # - dev
       # - 'feature-*'
       - main
+env:
+  ENV_TYPE: DEV
+  APP_USER: arnav
+  APP_PORT: 80
 jobs:
   job1:
     name: JOB1
@@ -47,11 +51,13 @@ jobs:
         uses: actions/download-artifact@v5.0.0
         with:
           name: single_file
-      - name: checking current directory post download
-        run: | 
-          pwd
-          ls -ltr
-          # ! making job 2 to fail
-      - name : Step for PR demos
-        run : exit 0
-  
+      - name : Reffering Enviornment variables
+        run : |
+          echo "[INFO] App user is $APP_USER and app port is $APP_PORT and env type is $ENV_TYPE"
+          echo "[INFO] Current directory is `pwd` and listing of files is `ls -ltr`  and hostname is `hostname`"
+          echo "[INFO] APP USER is $APP_USER"
+          echo "[INFO] APP PORT is $APP_PORT"
+          echo "[INFO] ENV TYPE is $ENV_TYPE"
+      - name : using Github Secrets
+        run : |
+          echo "Github token is ${{ secrets.APP_PASSWORD }}"
