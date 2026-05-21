@@ -25,10 +25,31 @@ jobs:
       - name: Step 3
         run: |
           echo `pwd` >> myFirstWorkflow.txt 
-          ls -ltr
+          echo `ls -ltr` >> artifacts/list.txt
+          echo `hostname` >> artifacts/hostname.txt
           hostname
       - name : upload Single file
         uses: actions/upload-artifact@v5.0.0
         with:
           name: single-file
           path : ./myFirstWorkflow.txt
+      - name : upload Multiple files
+        uses: actions/upload-artifact@v5.0.0
+        with:
+          name: multiple-files
+          path : artifacts/
+      - name : upload from multiple paths
+        uses: actions/upload-artifact@v5.0.0
+        with:
+          name: multiple-files
+          path : |
+            ./myFirstWorkflow.txt
+            artifacts/
+      - name : upload from multiple paths with exclusions
+        uses: actions/upload-artifact@v5.0.0
+        with:
+          name: multiple-files
+          path : |
+            ./myFirstWorkflow.txt
+            artifacts/
+            !**/hostname.txt
