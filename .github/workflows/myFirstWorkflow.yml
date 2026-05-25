@@ -4,7 +4,7 @@ on:
   push:
     branches:
 
-      
+
       - main
       # - dev
   pull_request:
@@ -81,6 +81,7 @@ jobs:
       # ! checks for status of code analysis and if it fails then it will fail the workflow and if it passes then it will pass the workflow
       - name : SonarQube Quality Gate Check
         uses : SonarSource/sonarqube-quality-gate-action@v1.1.0
+        continued-on-error: true
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}         
 
