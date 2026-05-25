@@ -51,11 +51,11 @@ jobs:
         uses: actions/checkout@v5.0.0
       - name: Initialize CodeQL
       # ! code ql is used for static code analysis and to find security vulnerabilities in the code
-        uses: github/codeql-action/init@v2.0.0
+        uses: github/codeql-action/init@v3
         with:
           languages: ${{ matrix.language }}
       - name : Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v2.0.0
+        uses: github/codeql-action/analyze@v3
         with :
           category: 'security'
     
