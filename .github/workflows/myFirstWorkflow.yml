@@ -108,6 +108,8 @@ jobs:
           context: .
           file: ./Dockerfile
           push: false
+          # ! we are not pushing the image to docker hub or any other registry we are just building the image and then saving that image as artifact in github actions and then we can download that artifact and load that image in our local docker and then run that image in our local docker and then test that image in our local docker and then if everything is fine then we can push that image to docker hub or any other registry
+          logs: true
           # ! using the image tags
           tags: myapp:${{ steps.vars.outputs.IMAGE_TAGS }}
       - name : Save Docker Image 
