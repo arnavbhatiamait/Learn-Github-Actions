@@ -34,4 +34,30 @@ jobs:
         with:
           name: unit-test-results
           path: reports/
+  codeql:
+    name: CodeQL Analysis
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+      # 
+      # ! this is required to upload the results of codeql analysis to github security tab
+    strategy:
+      matrix:
+        language: ['python']
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5.0.0
+      - name: Initialize CodeQL
+      # ! code ql is used for static code analysis and to find security vulnerabilities in the code
+        uses: github/codeql-action/init@v2.0.0
+        with:
+          languages: ${{ matrix.language }}
+      - name : Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v2.0.0
+        with :
+          category: 'security'
+    
+
         
