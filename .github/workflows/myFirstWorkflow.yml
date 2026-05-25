@@ -69,5 +69,9 @@ jobs:
         uses: SonarSource/sonarqube-scan-action@7006c4492b2e0ee0f816d36501671557c97f5995 # v8.1.0
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        
-        
+      # ! solving sonarqube qualtiy gate check failure by adding SONAR_TOKEN in secrets and then using it here to authenticate with sonarqube server and upload the results of code analysis to sonarqube server
+      # ! checks for status of code analysis and if it fails then it will fail the workflow and if it passes then it will pass the workflow
+      - name : SonarQube Quality Gate Check
+        uses : SonarSource/sonarqube-quality-gate-action@v2
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}         
