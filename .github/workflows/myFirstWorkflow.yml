@@ -5,7 +5,7 @@ on:
     branches:
 
       - main
-      - dev
+      # - dev
   pull_request:
     branches:
       - main
@@ -28,7 +28,8 @@ jobs:
       - name: Run unit tests
         run: |
           mkdir reports/
-          pytest --junitxml=reports/test-results.xml --cov=./ --cov-report=xml --cov-report=term-missing -v
+          # ! genrating the reports on new reports folder and then uploading that folder as artifact to github actions and then we can download that artifact and see the reports of unit tests and code coverage
+          pytest --junitxml=reports/test-results.xml --cov=./ --cov-report=xml:reports/coverage.xml --cov-report=term-missing -v
       - name: Upload test results
         uses: actions/upload-artifact@v5.0.0
         with:
@@ -58,7 +59,26 @@ jobs:
         uses: github/codeql-action/analyze@v3
         with :
           category: 'security'
-    
-
-        
-        
+  sonarqube:
+    name: SonarQube
+    runs-on: ubuntu-latest
+    needs: unit-tests
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name : Download Coverage Report
+        uses: actions/download-artifact@v5.0.0
+        with:
+          name: unit-test-results
+          path: reports/
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@7006c4492b2e0ee0f816d36501671557c97f5995 # v8.1.0
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      # ! solving sonarqube qualtiy gate check failure by adding SONAR_TOKEN in secrets and then using it here to authenticate with sonarqube server and upload the results of code analysis to sonarqube server
+      # ! checks for status of code analysis and if it fails then it will fail the workflow and if it passes then it will pass the workflow
+      - name : SonarQube Quality Gate Check
+        uses : SonarSource/sonarqube-quality-gate-action@v1.1.0
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}         
