@@ -1,0 +1,13 @@
+->artifacts
+-> python
+-> codeql
+->sonarqube
+-> checkout
+-> setup-python
+-> run-tests
+-> upload-artifact
+-> download-artifact
+-> github-permissions
+-> github-environment-variables
+-> github-context
+-> github-secrets
