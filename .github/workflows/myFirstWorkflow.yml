@@ -3,10 +3,10 @@ name: my-first-workflow
 on:
   push:
     branches:
-
-
       - main
-
+  pull_request:
+    branches:
+      - main
 jobs:
   ci-pipeline-jon:
     uses: arnavbhatiamait/ReusableWorkflow/.github/workflows/ci-pipeline.yml@main
