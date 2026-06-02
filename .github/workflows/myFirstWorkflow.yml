@@ -1,4 +1,10 @@
 name: my-first-workflow
+# Grant permissions required by the called reusable workflow's jobs
+permissions:
+  contents: read
+  actions: read
+  security-events: write
+  packages: write
 # To get a trigger on every push in this repo in any branch
 on:
   push:
