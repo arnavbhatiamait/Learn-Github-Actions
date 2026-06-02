@@ -6,7 +6,7 @@ on:
 jobs:
     demo-1:
         name: Demo Job 1
-        runs-on: example-runnerdeploy # * This job will run on the self-hosted runner with the label "arc-demo-runner-1"
+        runs-on: arc-demo # * This job will run on the self-hosted runner with the label "arc-demo"
         steps:
             - name: Display the System Information
               run: |
