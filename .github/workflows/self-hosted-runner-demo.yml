@@ -6,7 +6,8 @@ on:
 jobs:
     demo-1:
         name: Demo Job 1
-        runs-on: arc-demo # * This job will run on the self-hosted runner with the label "arc-demo"
+        runs-on: github-actions-scaleset-demo
+             # * This job will run on the self-hosted runner with org level 
         steps:
             - name: Display the System Information
               run: |
