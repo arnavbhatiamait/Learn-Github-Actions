@@ -28,7 +28,8 @@ jobs:
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
   deploy-with-kubectl:
     needs: ci-pipeline-jon
-    runs-on: github-actions-scaleset-demo
+    runs-on: self-hosted
+     # * This job will run on the self-hosted runner with org level
     steps:
       - name: Checkout the code
         uses: actions/checkout@v3
