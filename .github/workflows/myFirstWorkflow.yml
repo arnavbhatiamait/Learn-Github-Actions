@@ -17,10 +17,21 @@ jobs:
   ci-pipeline-jon:
     uses: arnavbhatiamait/ReusableWorkflow/.github/workflows/ci-pipeline.yml@main
     with:
-      run_codeql: true
-      run_sonarqube: true
-      run_build: false
+      run_codeql: false
+      run_sonarqube: false 
+
+      run_build: true
+      run_ghcr_publish: true
     secrets:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+  deploy-with-kubectl:
+    needs: ci-pipeline-jon
+    uses: arnavbhatiamait/ReusableWorkflow/.github/workflows/kubernetis_kubectl.yml@main
+    with: 
+      ENVIORNMENT: STAGING
+      NAMESPACE : ${{vars.NAMESPACE}}
+      IMAGE_NAME: ghcr.io/arnavbhatiamait/myapp
+    secrets:
+      KUBECONFIG: ${{ secrets.KUBECONFIG }}
