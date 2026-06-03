@@ -27,44 +27,11 @@ jobs:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
   deploy-with-kubectl:
-    environment : STAGING
-    env:
-      NAMESPACE: ${{vars.NAMESPACE}}
     needs: ci-pipeline-jon
-    runs-on: self-hosted
-     # * This job will run on the self-hosted runner with org level
-    steps:
-      - name: Checkout the code
-        uses: actions/checkout@v3
-      - name: Install Kubectl
-        run: |
-          curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
-          chmod +x ./kubectl
-          sudo mv ./kubectl /usr/local/bin/kubectl
-          kubectl version --client
-      - name: Configure to Kubecongig
-        run: |
-          mkdir -p ~/.kube
-          echo "${{ secrets.KUBECONFIG }}" > ~/.kube/config
-          kubectl version
-          kubectl get nodes
-      - name: Install yq
-        run: |
-          sudo curl -LO "https://github.com/mikefarah/yq/releases/download/v4.25.1/yq_linux_amd64" -o /usr/local/bin/yq
-          sudo chmod +x ./usr/local/bin/yq
-          yq --version
-      - name: update image in deployment.yaml
-        run: |
-         IMAGE_TAG="${{github.run_id}}-${GITHUB_SHA::7}"
-         IMAGE="ghcr.io/arnavbhatiamait/myapp:${IMAGE_TAG}"
-         yq e -i '.spec.template.spec.containers[0].image = strenv(IMAGE)' manifest/deployment.yaml -i
-      - name: Create namespace if not exists
-        run: |
-          kubectl get namespace $NAMESPACE || kubectl create namespace $NAMESPACE
-      - name : DEPLOY to Kubernetes Cluster
-        run: |
-          kubectl apply -f manifest/ -n $NAMESPACE 
-      - name: Verify the deployment
-        run: |
-          kubectl rollout status deployment/app1-deployment -n $NAMESPACE
-          kubectl get all -n $NAMESPACE
+    uses: arnavbhatiamait/ReusableWorkflow/.github/workflows/kubernetis_kubectl.yml@main
+    with: 
+      ENVIORNMENT: STAGING
+      NAMESPACE : ${{vars.NAMESPACE}}
+      IMAGE_NAME: ghcr.io/arnavbhatiamait/myapp
+    secrets:
+      KUBECONFIG: ${{ secrets.KUBECONFIG }}
