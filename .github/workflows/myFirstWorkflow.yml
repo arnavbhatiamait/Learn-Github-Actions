@@ -26,3 +26,9 @@ jobs:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+  deploy-with-kubectl:
+    needs: ci-pipeline-jon
+    runs-on: github-actions-scaleset-demo
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v3
