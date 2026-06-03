@@ -30,7 +30,7 @@ jobs:
     needs: ci-pipeline-jon
     uses: arnavbhatiamait/ReusableWorkflow/.github/workflows/kubernetis_kubectl.yml@main
     with: 
-      ENVIORNMENT: STAGING
+      ENVIRONMENT: STAGING
       NAMESPACE : ${{vars.NAMESPACE}}
       IMAGE_NAME: ghcr.io/arnavbhatiamait/myapp
     secrets:
