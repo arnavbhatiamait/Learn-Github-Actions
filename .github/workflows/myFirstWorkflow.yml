@@ -27,6 +27,9 @@ jobs:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
   deploy-with-kubectl:
+    environment : STAGING
+    env:
+      NAMESPACE: ${{vars.NAMESPACE}}
     needs: ci-pipeline-jon
     runs-on: self-hosted
      # * This job will run on the self-hosted runner with org level
@@ -55,3 +58,13 @@ jobs:
          IMAGE_TAG="${{github.run_id}}-${GITHUB_SHA::7}"
          IMAGE="ghcr.io/arnavbhatiamait/myapp:${IMAGE_TAG}"
          yq e -i '.spec.template.spec.containers[0].image = strenv(IMAGE)' manifest/deployment.yaml -i
+      - name: Create namespace if not exists
+        run: |
+          kubectl get namespace $NAMESPACE || kubectl create namespace $NAMESPACE
+      - name : DEPLOY to Kubernetes Cluster
+        run: |
+          kubectl apply -f manifest/ -n $NAMESPACE 
+      - name: Verify the deployment
+        run: |
+          kubectl rollout status deployment/app1-deployment -n $NAMESPACE
+          kubectl get all -n $NAMESPACE
