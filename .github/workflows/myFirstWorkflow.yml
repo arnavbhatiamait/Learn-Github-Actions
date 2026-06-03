@@ -30,8 +30,16 @@ jobs:
     needs: ci-pipeline-jon
     uses: arnavbhatiamait/ReusableWorkflow/.github/workflows/kubernetis_kubectl.yml@main
     with: 
-      ENVIORNMENT: STAGING
+      ENVIRONMENT: STAGING
       NAMESPACE : ${{vars.NAMESPACE}}
       IMAGE_NAME: ghcr.io/arnavbhatiamait/myapp
+    secrets:
+      KUBECONFIG: ${{ secrets.KUBECONFIG }}
+  run-selenium-tests:
+    needs: deploy-with-kubectl
+    uses: arnavbhatiamait/ReusableWorkflow/.github/workflows/run_selenium_test.yml@main
+    with:
+      ENVIRONMENT: STAGING
+      NAMESPACE : ${{vars.NAMESPACE}}
     secrets:
       KUBECONFIG: ${{ secrets.KUBECONFIG }}
